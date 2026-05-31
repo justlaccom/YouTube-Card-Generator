@@ -7,186 +7,102 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
 body {
-    background: #0f0f0f;
-    color: white;
-    font-family: Roboto, Arial, sans-serif;
-    padding: 24px;
-    margin: 0;
+  background: #0f0f0f;
+  color: white;
+  font-family: Roboto, Arial, sans-serif;
+  padding: 24px;
+  margin: 0;
 }
-
-h2 {
-    margin: 0 0 18px;
-    font-size: 18px;
-}
-
+h2 { margin: 0 0 18px; font-size: 18px; }
 input[type=text] {
-    width: 100%;
-    padding: 9px 12px;
-    font-size: 14px;
-    border: 1px solid #444;
-    border-radius: 8px;
-    background: #222;
-    color: white;
-    box-sizing: border-box;
-    margin-bottom: 8px;
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 14px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+  box-sizing: border-box;
+  margin-bottom: 8px;
 }
-
-input[type=text]:focus {
-    border-color: #cc0000;
-    outline: none;
-}
-
-label {
-    display: block;
-    font-size: 12px;
-    color: #aaa;
-    margin-bottom: 3px;
-    margin-top: 8px;
-}
-
+input[type=text]:focus { border-color: #cc0000; outline: none; }
+label { display: block; font-size: 12px; color: #aaa; margin-bottom: 3px; margin-top: 8px; }
 .btn-red {
-    padding: 9px 18px;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #cc0000;
-    color: white;
-    font-weight: 600;
-    margin-right: 8px;
+  padding: 9px 18px; font-size: 14px; border: none; border-radius: 8px;
+  cursor: pointer; background: #cc0000; color: white; font-weight: 600; margin-right: 8px;
 }
-
 .btn-gray {
-    padding: 9px 18px;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #333;
-    color: white;
-    font-weight: 600;
+  padding: 9px 18px; font-size: 14px; border: none; border-radius: 8px;
+  cursor: pointer; background: #333; color: white; font-weight: 600;
 }
-
-.btn-gray:hover {
-    background: #444;
-}
-
-.btn-red:hover {
-    background: #ee0000;
-}
-
-.section {
-    background: #1a1a1a;
-    border-radius: 10px;
-    padding: 14px;
-    margin-bottom: 14px;
-}
-
+.btn-gray:hover { background: #444; }
+.btn-red:hover { background: #ee0000; }
+.section { background: #1a1a1a; border-radius: 10px; padding: 14px; margin-bottom: 14px; }
 .section-title {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    color: #cc0000;
-    text-transform: uppercase;
-    margin-bottom: 10px;
+  font-size: 12px; font-weight: 700; letter-spacing: .08em;
+  color: #cc0000; text-transform: uppercase; margin-bottom: 10px;
 }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.youtube-card { width: 400px; margin: 20px auto 0; }
 
-.row2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-}
-
-.youtube-card {
-    width: 400px;
-    margin: 20px auto 0;
-}
-
+/* FIX 1 : padding autour de la vignette */
 .thumb-wrapper {
-    position: relative;
-    margin-bottom: 0;
+  position: relative;
+  margin-bottom: 0;
+  padding: 8px; /* ← écart entre les bords et l'image */
+  background: #0f0f0f; /* fond visible dans le padding */
+  border-radius: 16px;
+  box-sizing: border-box;
 }
 
 .thumbnail {
-    width: 100%;
-    display: block;
-    border-radius: 12px;
-    background: #222;
-    min-height: 225px;
-    object-fit: cover;
+  width: 100%;
+  display: block;
+  border-radius: 10px; /* légèrement réduit pour que le padding soit visible */
+  background: #222;
+  min-height: 225px;
+  object-fit: cover;
 }
-
 .thumb-placeholder {
-    width: 100%;
-    height: 225px;
-    border-radius: 12px;
-    background: #222;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #555;
-    font-size: 14px;
+  width: 100%;
+  height: 225px;
+  border-radius: 10px;
+  background: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-size: 14px;
 }
 
+/* FIX 2 : badge durée positionné À L'INTÉRIEUR de l'image */
 .duration-badge {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    background: rgba(0, 0, 0, 0.85);
-    padding: 4px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    color: white;
-    margin: 0;
+  position: absolute;
+  /* bottom et right relatifs au thumb-wrapper, donc on tient compte du padding */
+  bottom: 16px;  /* 8px padding + 8px de marge visuelle depuis le bas de l'image */
+  right: 16px;   /* idem */
+  background: rgba(0, 0, 0, 0.85);
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  pointer-events: none;
 }
 
-.yt-title {
-    margin-top: 12px;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-.yt-meta {
-    margin-top: 6px;
-    color: #aaa;
-    font-size: 14px;
-}
-
+.yt-title { margin-top: 12px; font-size: 20px; font-weight: 700; line-height: 1.3; }
+.yt-meta { margin-top: 6px; color: #aaa; font-size: 14px; }
 .img-upload-area {
-    border: 2px dashed #444;
-    border-radius: 8px;
-    padding: 14px;
-    text-align: center;
-    cursor: pointer;
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 8px;
-    transition: border-color .2s;
+  border: 2px dashed #444; border-radius: 8px; padding: 14px;
+  text-align: center; cursor: pointer; font-size: 13px; color: #888;
+  margin-bottom: 8px; transition: border-color .2s;
 }
-
-.img-upload-area:hover {
-    border-color: #cc0000;
-    color: #ccc;
-}
-
-.divider {
-    border: none;
-    border-top: 1px solid #2a2a2a;
-    margin: 16px 0;
-}
-
-.export-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
+.img-upload-area:hover { border-color: #cc0000; color: #ccc; }
+.divider { border: none; border-top: 1px solid #2a2a2a; margin: 16px 0; }
+.export-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 </style>
 </head>
 <body>
-
 <h2>YouTube Card Generator</h2>
 
 <div class="section">
@@ -247,7 +163,6 @@ function randomDuration() {
   var sec = Math.floor(Math.random() * 60);
   return min + ':' + (sec < 10 ? '0' : '') + sec;
 }
-
 function randomViews() {
   var vals = [
     "3,2 k vues","7,8 k vues","12 k vues","18 k vues","24 k vues",
@@ -259,26 +174,23 @@ function randomViews() {
   ];
   return vals[Math.floor(Math.random() * vals.length)];
 }
-
 function randomDate() {
   var r = Math.random();
   if (r < 0.08) { var h = Math.floor(Math.random()*23)+1; return h===1 ? "il y a 1 heure" : "il y a " + h + " heures"; }
-  if (r < 0.18) { var d = Math.floor(Math.random()*6)+1;  return d===1 ? "il y a 1 jour"  : "il y a " + d + " jours"; }
-  if (r < 0.50) { var w = Math.floor(Math.random()*4)+1;  return w===1 ? "il y a 1 semaine" : "il y a " + w + " semaines"; }
-  if (r < 0.78) { var m = Math.floor(Math.random()*11)+1; return m===1 ? "il y a 1 mois"  : "il y a " + m + " mois"; }
+  if (r < 0.18) { var d = Math.floor(Math.random()*6)+1; return d===1 ? "il y a 1 jour" : "il y a " + d + " jours"; }
+  if (r < 0.50) { var w = Math.floor(Math.random()*4)+1; return w===1 ? "il y a 1 semaine" : "il y a " + w + " semaines"; }
+  if (r < 0.78) { var m = Math.floor(Math.random()*11)+1; return m===1 ? "il y a 1 mois" : "il y a " + m + " mois"; }
   var y = Math.floor(Math.random()*6)+1; return y===1 ? "il y a 1 an" : "il y a " + y + " ans";
 }
-
 function updateCard() {
-  var title = document.getElementById('titleInput').value    || 'Titre vidéo';
-  var dur   = document.getElementById('durationInput').value || '14:37';
-  var views = document.getElementById('viewsInput').value    || '407 k vues';
-  var date  = document.getElementById('dateInput').value     || 'il y a 3 semaines';
-  document.getElementById('titleDisplay').textContent  = title;
+  var title = document.getElementById('titleInput').value || 'Titre vidéo';
+  var dur = document.getElementById('durationInput').value || '14:37';
+  var views = document.getElementById('viewsInput').value || '407 k vues';
+  var date = document.getElementById('dateInput').value || 'il y a 3 semaines';
+  document.getElementById('titleDisplay').textContent = title;
   document.getElementById('durationBadge').textContent = dur;
-  document.getElementById('metaDisplay').textContent   = views + ' • ' + date;
+  document.getElementById('metaDisplay').textContent = views + ' • ' + date;
 }
-
 function updateThumb() {
   var url = document.getElementById('thumbUrl').value.trim();
   if (!url) return;
@@ -288,7 +200,6 @@ function updateThumb() {
   document.getElementById('thumbPlaceholder').style.display = 'none';
   document.getElementById('uploadArea').textContent = 'Image chargée via URL';
 }
-
 function handleImageUpload(e) {
   var file = e.target.files[0];
   if (!file) return;
@@ -303,18 +214,17 @@ function handleImageUpload(e) {
   };
   reader.readAsDataURL(file);
 }
-
 function loadVideo() {
   var url = document.getElementById('url').value.trim();
   if (!url) { alert('URL manquante'); return; }
   fetch('https://www.youtube.com/oembed?url=' + encodeURIComponent(url) + '&format=json')
     .then(function(r) { return r.json(); })
     .then(function(data) {
-      document.getElementById('titleInput').value    = data.title;
-      document.getElementById('thumbUrl').value      = data.thumbnail_url;
+      document.getElementById('titleInput').value = data.title;
+      document.getElementById('thumbUrl').value = data.thumbnail_url;
       document.getElementById('durationInput').value = randomDuration();
-      document.getElementById('viewsInput').value    = randomViews();
-      document.getElementById('dateInput').value     = randomDate();
+      document.getElementById('viewsInput').value = randomViews();
+      document.getElementById('dateInput').value = randomDate();
       var img = document.getElementById('thumb');
       img.src = data.thumbnail_url;
       img.style.display = 'block';
@@ -322,18 +232,14 @@ function loadVideo() {
       document.getElementById('uploadArea').textContent = 'Image chargée depuis YouTube';
       updateCard();
     })
-    .catch(function() {
-      alert('Impossible de récupérer cette vidéo.');
-    });
+    .catch(function() { alert('Impossible de récupérer cette vidéo.'); });
 }
-
 function randomize() {
   document.getElementById('durationInput').value = randomDuration();
-  document.getElementById('viewsInput').value    = randomViews();
-  document.getElementById('dateInput').value     = randomDate();
+  document.getElementById('viewsInput').value = randomViews();
+  document.getElementById('dateInput').value = randomDate();
   updateCard();
 }
-
 function exportPNG() {
   var card = document.getElementById('card');
   html2canvas(card, { scale: 3, useCORS: true, backgroundColor: '#0f0f0f' })
